@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <title>c# Assest</title>
+        
+        <style>
+            h1 {text-align: center;}
+            p{text-align: center;}
+            </style>
+
+            <p>&nbsp;</p>
+            <body style="background-color:#4da8e0;"></body>
+            <h1><font size = "7">Teleport Script</font></h1>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>
+                <code>
+                    <textarea name="sss" id="ss" cols="80" rows="16">
+     using System.Collections;
+     using System.Collections.Generic;
+     using UnityEngine;
+                        
+    public class Teleport : MonoBehaviour
+    {
+        public Transform teleportTarget;
+        public GameObject thePlayer;
+    
+        public void Teleport()
+        {
+            thePlayer.transform.position = teleportTarget.transform.position;
+        }
+    }
+                    </textarea>
+                </code>
+            </p>
+            <h1><font size = "7">Spawner</font></h1>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>
+                <code>
+                    <textarea name="sss" id="ss" cols="90" rows="20">
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+                            
+    public class Spawner : MonoBehaviour
+    {
+        public GameObject cubePrefab;
+                            
+                            
+        public void Spawn()
+        {
+                Destroy(GameObject.Find("stonemine (1)(Clone)"));
+                Instantiate(cubePrefab, transform.position, Quaternion.identity);
+        }
+                            
+    }
+                    </textarea>
+                </code>
+            </p>
+
+        </p>
+        <h1><font size = "7">PanelActiveFalseTrigger</font></h1>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>
+            <code>
+                <textarea name="sss" id="ss" cols="90" rows="26">
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+                        
+    public class PanelActiveTrigger : MonoBehaviour
+    {
+        public GameObject Panel;
+                        
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.CompareTag("Player"))
+            {
+                Panel.SetActive(true);
+            }
+        }
+                        
+        private void OnTriggerExit(Collider other)
+        {
+            if(other.CompareTag("Player"))
+            {
+                Panel.SetActive(false);
+            }
+        }
+    }
+                </textarea>
+            </code>
+        </p>
+
+        <h1><font size = "7">PanelOpen</font></h1>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>
+            <code>
+                <textarea name="sss" id="ss" cols="50" rows="15">
+using System.Collections;  
+using System.Collections.Generic;  
+using UnityEngine;  
+
+    public class OpenPanel: MonoBehaviour {  
+    public GameObject Panel;  
+    public void PanelOpener() {  
+        if (Panel != null) {  
+            bool isActive = Panel.activeSelf;  
+            Panel.SetActive(!isActive);  
+        }  
+    }  
+} 
+                </textarea>
+            </code>
+        </p>
+
+        <h1><font size = "7">PlayerController</font></h1>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>
+            <code>
+                <textarea name="sss" id="ss" cols="160" rows="45">
+                    using UnityEngine;
+                    using System.Collections;
+                    
+                    // This script moves the character controller forward
+                    // and sideways based on the arrow keys.
+                    // It also jumps when pressing space.
+                    // Make sure to attach a character controller to the same game object.
+                    // It is recommended that you make only one call to Move or SimpleMove per frame.
+                    
+                    public class PlayerController : MonoBehaviour
+                    {
+                        CharacterController characterController;
+                    
+                        public float speed = 6.0f;
+                        public float jumpSpeed = 8.0f;
+                        public float gravity = 20.0f;
+                    
+                        private Vector3 moveDirection = Vector3.zero;
+                    
+                        void Start()
+                        {
+                            characterController = GetComponent<CharacterController>();
+                        }
+                    
+                        void Update()
+                        {
+                            if (characterController.isGrounded)
+                            {
+                                // We are grounded, so recalculate
+                                // move direction directly from axes
+                    
+                                moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+                                moveDirection *= speed;
+                    
+                                if (Input.GetButton("Jump"))
+                                {
+                                    moveDirection.y = jumpSpeed;
+                                }
+                            }
+                    
+                            // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below
+                            // when the moveDirection is multiplied by deltaTime). This is because gravity should be applied
+                            // as an acceleration (ms^-2)
+                            moveDirection.y -= gravity * Time.deltaTime;
+                    
+                            // Move the controller
+                            characterController.Move(moveDirection * Time.deltaTime);
+                        }
+                    }
+                </textarea>
+            </code>
+        </p>
+
+        <h1><font size = "7">Player Movement</font></h1>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>
+            <code>
+                <textarea name="sss" id="ss" cols="90" rows="28">
+                    using System.Collections;
+                    using System.Collections.Generic;
+                    using UnityEngine;
+                    
+                    public class PlayerMovement : MonoBehaviour
+                    {
+                       public float speed;
+                       
+                       private Rigidbody rb;
+                       
+                       
+                       
+                       //Start is called before the first frame update//
+                       void Start()
+                       {
+                           rb = GetComponent<Rigidbody>();
+                       }
+                       
+                       //Update is called once per frame
+                       void FixedUpdate()
+                       {
+                          float moveLR = Input.GetAxis("Horizontal");
+                          float moveFB = Input.GetAxis("Vertical");
+                          
+                          rb.AddForce (new Vector3(speed * moveLR, 0, speed * moveFB));
+                       }
+                    }
+                </textarea>
+            </code>
+        </p>
+      </body>
+</html>
